@@ -18,7 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('--gpu', type=str, help='0 or 1', default='0')
     parser.add_argument('--batch-size', dest='batch_size', type=int, default=200)
     parser.add_argument('--epochs', dest='epochs', type=int, default=10)
-    parser.add_argument('--modeltype', dest='modeltype', type=str, default='acl1')
+    parser.add_argument('--modeltype', dest='modeltype', type=str, default='codegnngru')
     parser.add_argument('--data', dest='dataprep', type=str, default='../data')
     parser.add_argument('--outdir', dest='outdir', type=str, default='./modelout')
     parser.add_argument('--asthops', dest='hops', type=int, default=2)
