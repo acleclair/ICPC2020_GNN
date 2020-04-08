@@ -1,5 +1,5 @@
 # ICPC2020_GNN
-This code is part of the reproducibility package for the ICPC 2020 paper "Improved Code Summarization via a Graph Neural Network" - [arxiv]()
+This code is part of the reproducibility package for the ICPC 2020 paper "Improved Code Summarization via a Graph Neural Network" - [arxiv](https://arxiv.org/abs/2004.02843)
 
 The reproducibility package has three parts:
 1. the code found in this repository
