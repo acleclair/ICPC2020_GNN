@@ -8,7 +8,7 @@ The reproducibility package has three parts:
 
 The dataset we used is from our NAACL'19 paper "Recommendations for Datasets for Source Code Summarization" where the unprocessed data can be found and downloaded [HERE](http://leclair.tech/data/funcom/)
 
-This code uses Keras V2.3.1 and Tensorflow V1.14 
+This code uses Keras v2.3.1 and Tensorflow v1.15.2 
 
 ## Running the code and models
 
