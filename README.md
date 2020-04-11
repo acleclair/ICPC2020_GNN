@@ -8,6 +8,8 @@ The reproducibility package has three parts:
 
 The dataset we used is from our NAACL'19 paper "Recommendations for Datasets for Source Code Summarization" where the unprocessed data can be found and downloaded [HERE](http://leclair.tech/data/funcom/)
 
+This code uses Keras V2.3.1 and Tensorflow V1.14 
+
 ## Running the code and models
 
 To run the trained models from the paper download the three parts of the reproducibility package and run predict.py. Predict.py takes the path to the model file as a positional argument and will output the prediction file to ./modelout/predictions.
