@@ -53,5 +53,5 @@ class GCNLayer(Layer):
             'activation': activations.serialize(self.activation),
         }
 
-        base_config = super(AlexGraphLayer, self).get_config()
+        base_config = super(GCNLayer, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
