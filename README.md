@@ -3,7 +3,7 @@ This code is part of the reproducibility package for the ICPC 2020 paper "Improv
 
 The reproducibility package has three parts:
 1. the code found in this repository
-2. the trained models which can be downloaded [HERE](https://icpc2020.s3.us-east-2.amazonaws.com/ICPC_2020_data.tar.gz)
+2. the trained models, predictions, and tokenizer (.tok) files can be downloaded [HERE](https://icpc2020.s3.us-east-2.amazonaws.com/ICPC_2020_data.tar.gz)
 3. the fully processed data (as a pkl file) can be downloaded [HERE](https://icpc2020.s3.us-east-2.amazonaws.com/dataset.pkl)
 
 The dataset we used is from our NAACL'19 paper "Recommendations for Datasets for Source Code Summarization" where the unprocessed data can be found and downloaded [HERE](http://leclair.tech/data/funcom/)
