@@ -22,6 +22,9 @@ To train a new model run train.py with the modeltype and gpu options set.
 
 `python3 train.py --gpu 0 --modeltype codegnnbilstm --data ./mydata`
 
+##Processing Files
+We have added our processing files to the processing directory. These files will not work without some tweaking due to hard coded paths/file names/databases but show how we processed our code, comments, and AST. To generate the base AST XML we use SrCML which can be downloaded [HERE](https://www.srcml.org/)
+
 ## Cite this work
 ```
 @inproceedings{
