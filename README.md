@@ -16,7 +16,7 @@ To run the trained models from the paper download the three parts of the reprodu
 
 `python3 predict.py {path to model} --gpu 0 --modeltype {model type: codegnngru|codegnnbilstm|codegnndense} --data {path to data download}`
 
-`python3 predict.py ./mymodels/codegnngru.h5 --gpu 0 --modeltype codegnngru --data ./mymodels`
+`python3 predict.py ./mymodels/codegnngru.h5 --gpu 0 --modeltype codegnngru --data ./mydata`
 
 To train a new model run train.py with the modeltype and gpu options set.
 
