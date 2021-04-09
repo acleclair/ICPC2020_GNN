@@ -2,7 +2,8 @@ import random
 import sys
 from timeit import default_timer as timer
 
-import keras
+from tensorflow import keras
+import tensorflow as tf
 import numpy as np
 
 # do NOT import keras in this header area, it will break predict.py
@@ -41,6 +42,7 @@ class batch_gen(keras.utils.Sequence):
         self.comvocabsize = config['comvocabsize']
         self.tt = tt
         self.batch_size = config['batch_size']
+        self.modeltype = config['modeltype']
         self.seqdata = seqdata
         self.allfids = list(seqdata['dt%s' % (tt)].keys())
         self.config = config
@@ -70,18 +72,14 @@ class batch_gen(keras.utils.Sequence):
         tdatseqs = list()
         comseqs = list()
         smlnodes = list()
-
         wedge_1 = list()
-
         comouts = list()
-
         fiddat = dict()
 
         for fid in batchfids:
 
             wtdatseq = seqdata['dt%s' % (tt)][fid]
             wcomseq = seqdata['c%s' % (tt)][fid]
-            # wsmlnodes = seqdata['s%s_nodes' % (tt)][fid]
             try:
                 wsmlnodes = nodedata[fid]
             except:
@@ -112,8 +110,8 @@ class batch_gen(keras.utils.Sequence):
             if tt == 'test':
                 fiddat[fid] = [wtdatseq, wcomseq, wsmlnodes, edge_1]
             else:
-                for i in range(0, len(wcomseq)):
-                    tdatseqs.append(wtdatseq)
+                for i in range(1, len(wcomseq)):
+                    tdatseqs.append(np.asarray(wtdatseq))
                     smlnodes.append(wsmlnodes)
                     wedge_1.append(edge_1)
 
@@ -127,7 +125,7 @@ class batch_gen(keras.utils.Sequence):
                         except IndexError as ex:
                             comseq = np.append(comseq, 0)
 
-                    comseqs.append(comseq)
+                    comseqs.append(np.asarray(comseq))
                     comouts.append(np.asarray(comout))
 
  
@@ -142,13 +140,11 @@ class batch_gen(keras.utils.Sequence):
         if tt == 'test':
             return fiddat
         else:
-            # if self.config['num_output'] == 2:
-            # return [[tdatseqs, comseqs, smlnodes, wedge_1],
-            #         [comouts, comouts]]
-            # else:
-            #     if (self.config['use_tdats']):
-            return [[tdatseqs, comseqs, smlnodes, wedge_1],
-                    comouts]
-            #     else:
-            # return [[comseqs, smlnodes, wedge_1], comouts]
+            if self.modeltype == 'attendgru':
+                return [[tdatseqs, comseqs], comouts]
+            elif self.modeltype == 'ast-attendgru':
+                return [[tdatseqs, comseqs, smlnodes], comouts]
+            else:
+                return [[tdatseqs, comseqs, smlnodes, wedge_1], comouts]
+
 

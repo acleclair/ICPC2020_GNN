@@ -54,6 +54,7 @@ if __name__ == '__main__':
     # set sequence length for our input
     config['tdatlen'] = 50
     config['maxastnodes'] = 100
+    config['smllen'] = config['maxastnodes']
     config['comlen'] = 13
         
     config['batch_size'] = batch_size
@@ -88,10 +89,18 @@ if __name__ == '__main__':
     # set up data generators
     gen = batch_gen(seqdata, 'train', config, nodedata=node_data, edgedata=edges)
 
+    # for i in gen:
+    #     for j in i[0][0]:
+    #         if len(j) != 50:
+    #             print(len(j))
+    #     print("done")
+    #     exit()
+
+    valgen = batch_gen(seqdata, 'val', config, nodedata=seqdata['sval_nodes'], edgedata=seqdata['sval_edges'])
+
     checkpoint = ModelCheckpoint(outdir+"/models/"+modeltype+"_E{epoch:02d}.h5")
     
-    valgen = batch_gen(seqdata, 'val', config, nodedata=seqdata['sval_nodes'], edgedata=seqdata['sval_edges'])
+   
     callbacks = [ checkpoint ]
 
-    model.fit_generator(gen, steps_per_epoch=steps, epochs=epochs, verbose=1, max_queue_size=4,
-                        callbacks=callbacks, validation_data=valgen, validation_steps=valsteps)
+    model.fit(gen, steps_per_epoch=steps, epochs=epochs, verbose=1, callbacks=callbacks)# validation_data=valgen, validation_steps=valsteps

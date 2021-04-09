@@ -24,11 +24,15 @@ def gen_pred(model, data, comstok, comlen, batchsize, config, strat='greedy'):
     wedge_1 = np.array(wedge_1)
 
     for i in range(1, comlen):
-        results = model.predict([tdats, coms, wsmlnodes, wedge_1],
-                                batch_size=batchsize)
+        if config['modeltype'] == 'attendgru':
+            results = model.predict([tdats,coms], batch_size=batchsize)
+        elif config['modeltype'] == 'ast-attendgru':
+            results = model.predict([tdats, coms], batch_size=batchsize)
+        else:
+            results = model.predict([tdats, coms, wsmlnodes, wedge_1],
+                                    batch_size=batchsize)
         for c, s in enumerate(results):
             coms[c][i] = np.argmax(s)
-
 
     final_data = {}
     for fid, com in zip(data.keys(), coms):
@@ -42,9 +46,9 @@ if __name__ == '__main__':
     parser.add_argument('model', type=str, default=None)
     parser.add_argument('--modeltype', dest='modeltype', type=str, default=None)
     parser.add_argument('--gpu', dest='gpu', type=str, default='')
-    parser.add_argument('--data', dest='dataprep', type=str, default='../data')
+    parser.add_argument('--data', dest='dataprep', type=str, default='./data')
     parser.add_argument('--outdir', dest='outdir', type=str, default='modelout/')
-    parser.add_argument('--batch-size', dest='batchsize', type=int, default=30) 
+    parser.add_argument('--batch-size', dest='batchsize', type=int, default=300) 
     parser.add_argument('--outfile', dest='outfile', type=str, default=None)
 
     args = parser.parse_args()
@@ -112,13 +116,13 @@ if __name__ == '__main__':
     outf = open(outfn, 'w')
     print("writing to file: " + outfn)
     batch_sets = [allfids[i:i+batchsize] for i in range(0, len(allfids), batchsize)]
- 
+    bg = batch_gen(seqdata, 'test', config, nodedata=node_data, edgedata=edgedata)
+
     for c, fid_set in enumerate(batch_sets):
         st = timer()
         for fid in fid_set:
-            seqdata['ctest'][fid] = comstart #np.asarray([stk])
+            seqdata['ctest'][fid] = comstart
 
-        bg = batch_gen(seqdata, 'test', config, nodedata=node_data, edgedata=edgedata)
         batch = bg.make_batch(fid_set)
    
         batch_results = gen_pred(model, batch, comstok, comlen, batchsize, config, strat='greedy')
